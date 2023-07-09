@@ -43,15 +43,17 @@ export class Crosis {
     };
   }
 
-  openChannel(options: ReplitProtocol.OpenChannel) {
-    const message = ReplitProtocol.Command.encode(
-      ReplitProtocol.Command.create({
-        channel: 0,
-        openChan: options,
-      })
+  send(message: any) {
+    this.ws.send(
+      ReplitProtocol.Command.encode(ReplitProtocol.Command.create(message))
     );
+  }
 
-    this.ws.send(message);
+  openChannel(options: ReplitProtocol.OpenChannel) {
+    this.send({
+      channel: 0,
+      openChan: options,
+    });
 
     // TODO: await for the openChanRes response
   }
