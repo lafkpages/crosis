@@ -60,7 +60,7 @@ export class Crosis {
     };
   }
 
-  generateRef() {
+  private generateRef() {
     // Return a random string
     return Math.random().toString(36).substring(2);
   }
