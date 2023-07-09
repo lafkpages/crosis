@@ -10,6 +10,7 @@ export class Crosis {
   private adapter: Adapter | null;
   private ws: WebSocket;
   private refHandlers: Record<string, Function>;
+  private channels: Record<number, ReplitProtocol.OpenChannelRes>;
 
   constructor(options: CrosisOptions) {
     options = {
@@ -23,6 +24,8 @@ export class Crosis {
     this.ws = null;
 
     this.refHandlers = {};
+
+    this.channels = {};
   }
 
   async connect() {
@@ -81,6 +84,8 @@ export class Crosis {
         action: action || ReplitProtocol.OpenChannel.Action.ATTACH_OR_CREATE
       },
     });
+
+    this.channels[openChanRes.openChanRes.id] = openChanRes.openChanRes;
 
     return openChanRes.openChanRes;
   }
