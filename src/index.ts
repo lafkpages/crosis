@@ -37,5 +37,24 @@ export class Crosis {
     await new Promise((resolve) => {
       this.ws.onopen = resolve;
     });
+
+    // Add event listeners
+    this.ws.onmessage = (event) => {
+      const message = ReplitProtocol.Command.decode(event.data);
+      console.log(message);
+    };
+  }
+
+  openChannel(options: ReplitProtocol.OpenChannel) {
+    const message = ReplitProtocol.Command.encode(
+      ReplitProtocol.Command.create({
+        channel: 0,
+        openChan: options,
+      })
+    );
+
+    this.ws.send(message);
+
+    // TODO: await for the openChanRes response
   }
 }
