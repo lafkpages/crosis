@@ -1,13 +1,14 @@
 import { WebSocket } from 'ws';
-import type { CrosisOptions } from "./lib/types"
+import type { CrosisOptions, Adapter } from "./lib/types"
 
 const defaultOptions: CrosisOptions = {
   autoConnect: true,
 };
 
 class Crosis {
-  public ws: WebSocket;
-  public url: string;
+  private url: string | null;
+  private adapter: Adapter;
+  private ws: WebSocket;
 
   constructor(options: CrosisOptions) {
     options = {
@@ -15,12 +16,17 @@ class Crosis {
       ...options
     };
 
-    this.url = options.url || "" // TODO
+    this.adapter = options.adapter;
 
-    if (options.autoConnect) {
-      this.ws = new WebSocket(this.url);
-    } else {
-      this.ws = null;
-    }
+    this.url = options.url || undefined;
+    this.ws = null;
+  }
+
+  async connect() {
+    const adapterResult = this.adapter
+      ? await this.adapter()
+      : null;
+
+    
   }
 }
