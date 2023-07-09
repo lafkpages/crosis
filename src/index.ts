@@ -112,7 +112,14 @@ export class Crosis {
     return closeChanRes.closeChanRes;
   }
 
-  disconnect() {
+  async disconnect(autoClose = true) {
+    // Close all channels
+    if (autoClose) {
+      for (const channel of Object.values(this.channels)) {
+        await channel.close();
+      }
+    }
+
     this.ws.close();
   }
 }
