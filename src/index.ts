@@ -72,10 +72,14 @@ export class Crosis {
     });
   }
 
-  async openChannel(options: ReplitProtocol.OpenChannel) {
+  async openChannel(service: string, name?: string) {
     const openChanRes = await this.send({
       channel: 0,
-      openChan: options,
+      openChan: {
+        service,
+        name: name || '',
+        action: ReplitProtocol.OpenChannel.Action.ATTACH_OR_CREATE
+      },
     });
 
     return openChanRes.openChanRes;
