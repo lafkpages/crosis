@@ -1,5 +1,5 @@
 import { WebSocket } from "ws";
-import { api as ReplitProtocol } from "@replit/protocol";
+import { api as protocol } from "@replit/protocol";
 
 import type { CrosisOptions, Adapter } from "./lib/types";
 
@@ -12,8 +12,8 @@ export class Crosis {
   private debug: boolean;
   private refHandlers: Record<string, Function>;
   private channels: Record<number, Channel>;
-  bootStatus: ReplitProtocol.BootStatus.Stage | null;
-  containerState: ReplitProtocol.ContainerState.State | null;
+  bootStatus: protocol.BootStatus.Stage | null;
+  containerState: protocol.ContainerState.State | null;
 
   constructor(options: CrosisOptions) {
     options = {
@@ -52,7 +52,7 @@ export class Crosis {
 
     // Add event listeners
     this.ws.onmessage = (event) => {
-      const message = ReplitProtocol.Command.decode(event.data);
+      const message = protocol.Command.decode(event.data);
 
       if (this.debug) {
         console.log(message);
@@ -80,14 +80,14 @@ export class Crosis {
     return Math.random().toString(36).substring(2);
   }
 
-  send(message: any, autoRef = true): Promise<ReplitProtocol.Command> {
+  send(message: any, autoRef = true): Promise<protocol.Command> {
     if (autoRef && !message.ref) {
       message.ref = this.generateRef();
     }
 
     this.ws.send(
-      ReplitProtocol.Command.encode(
-        ReplitProtocol.Command.create(message)
+      protocol.Command.encode(
+        protocol.Command.create(message)
       ).finish()
     );
 
@@ -96,13 +96,13 @@ export class Crosis {
     });
   }
 
-  async openChannel(service: string, name?: string, action?: ReplitProtocol.OpenChannel.Action) {
+  async openChannel(service: string, name?: string, action?: protocol.OpenChannel.Action) {
     const openChanRes = await this.send({
       channel: 0,
       openChan: {
         service,
         name: name || '',
-        action: action || ReplitProtocol.OpenChannel.Action.ATTACH_OR_CREATE
+        action: action || protocol.OpenChannel.Action.ATTACH_OR_CREATE
       },
     });
 
@@ -113,12 +113,12 @@ export class Crosis {
     return channel;
   }
 
-  async closeChannel(id: number, action?: ReplitProtocol.CloseChannel.Action) {
+  async closeChannel(id: number, action?: protocol.CloseChannel.Action) {
     const closeChanRes = await this.send({
       channel: 0,
       closeChan: {
         id,
-        action: action || ReplitProtocol.CloseChannel.Action.TRY_CLOSE
+        action: action || protocol.CloseChannel.Action.TRY_CLOSE
       }
     });
 
@@ -141,9 +141,9 @@ export class Crosis {
 
 export class Channel {
   private crosis: Crosis;
-  private openChanRes: ReplitProtocol.OpenChannelRes;
+  private openChanRes: protocol.OpenChannelRes;
 
-  constructor(crosis: Crosis, openChanRes: ReplitProtocol.OpenChannelRes) {
+  constructor(crosis: Crosis, openChanRes: protocol.OpenChannelRes) {
     this.crosis = crosis;
     this.openChanRes = openChanRes;
   }
@@ -158,7 +158,7 @@ export class Channel {
     return this.crosis.send(...args);
   }
 
-  close(action?: ReplitProtocol.CloseChannel.Action) {
+  close(action?: protocol.CloseChannel.Action) {
     return this.crosis.closeChannel(this.id, action);
   }
 }
