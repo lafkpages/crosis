@@ -9,6 +9,7 @@ export class Crosis {
   private url: string | null;
   private adapter: Adapter | null;
   private ws: WebSocket;
+  private debug: boolean;
   private refHandlers: Record<string, Function>;
   private channels: Record<number, Channel>;
 
@@ -22,6 +23,8 @@ export class Crosis {
 
     this.url = options.url || undefined;
     this.ws = null;
+
+    this.debug = options.debug || false;
 
     this.refHandlers = {};
 
@@ -45,7 +48,10 @@ export class Crosis {
     // Add event listeners
     this.ws.onmessage = (event) => {
       const message = ReplitProtocol.Command.decode(event.data);
-      console.log(message);
+
+      if (this.debug) {
+        console.log(message);
+      }
 
       // Run handler for this ref
       if (message.ref && this.refHandlers[message.ref]) {
