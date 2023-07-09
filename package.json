@@ -1,0 +1,24 @@
+{
+  "name": "crosis",
+  "version": "0.0.1",
+  "description": "",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "crosis",
+    "client",
+    "goval",
+    "replit",
+    "repl.it"
+  ],
+  "author": "LuisAFK",
+  "contributors": [
+    "Erik Ga"
+  ],
+  "license": "AGPL-3.0",
+  "dependencies": {
+    
+  }
+}
