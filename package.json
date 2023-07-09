@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npm run build; node dist/test",
+    "test": "npm run build & node dist/test",
     "format": "prettier --write .",
     "build": "tsc"
   },
@@ -26,7 +26,7 @@
   },
   "dependencies": {
     "@replit/protocol": "^0.3.16",
-    "node-fetch": "^3.3.1",
+    "node-fetch": "^2.6.12",
     "ws": "^8.13.0"
   }
 }
