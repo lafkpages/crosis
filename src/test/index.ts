@@ -18,7 +18,6 @@ crosis.connect().then(async () => {
   console.log("Crosis connected!");
 
   const gcsFilesChannel = await crosis.openChannel("gcsfiles");
-
   console.log('Opened GCSFiles channel!');
 
   const fileRes = await gcsFilesChannel.send({
