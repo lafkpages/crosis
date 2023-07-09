@@ -18,7 +18,7 @@
     "Erik Ga"
   ],
   "license": "AGPL-3.0",
-  "dependencies": {
-    
+  "devDependencies": {
+    "prettier": "^3.0.0"
   }
 }
