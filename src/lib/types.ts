@@ -1,6 +1,5 @@
 export interface CrosisOptions {
   adapter?: Adapter;
-  autoConnect?: boolean;
   url?: string;
 }
 

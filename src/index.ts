@@ -3,9 +3,7 @@ import { api as ReplitProtocol } from "@replit/protocol";
 
 import type { CrosisOptions, Adapter } from "./lib/types";
 
-const defaultOptions: CrosisOptions = {
-  autoConnect: true,
-};
+const defaultOptions: CrosisOptions = {};
 
 export class Crosis {
   private url: string | null;
