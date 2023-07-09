@@ -89,4 +89,18 @@ export class Crosis {
 
     return openChanRes.openChanRes;
   }
+
+  async closeChannel(id: number, action?: ReplitProtocol.CloseChannel.Action) {
+    const closeChanRes = await this.send({
+      channel: 0,
+      closeChan: {
+        id,
+        action: action || ReplitProtocol.CloseChannel.Action.TRY_CLOSE
+      }
+    });
+
+    delete this.channels[id];
+
+    return closeChanRes.closeChanRes;
+  }
 }
