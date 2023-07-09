@@ -51,7 +51,7 @@ async function replitAdapter() {
 
     if (!metadataReq.ok) {
       throw new Error(
-        "Replit metadata request was not successful. Did you enter the correct connect.sid?"
+        `Replit metadata request was not successful. Did you enter the correct connect.sid? ${await metadataReq.text()}`
       );
     }
 
