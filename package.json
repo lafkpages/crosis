@@ -25,6 +25,7 @@
     "typescript": "^5.1.6"
   },
   "dependencies": {
+    "@replit/protocol": "^0.3.16",
     "ws": "^8.13.0"
   }
 }
