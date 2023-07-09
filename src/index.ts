@@ -10,7 +10,7 @@ export class Crosis {
   private adapter: Adapter | null;
   private ws: WebSocket;
   private refHandlers: Record<string, Function>;
-  private channels: Record<number, ReplitProtocol.OpenChannelRes>;
+  private channels: Record<number, Channel>;
 
   constructor(options: CrosisOptions) {
     options = {
@@ -85,9 +85,11 @@ export class Crosis {
       },
     });
 
-    this.channels[openChanRes.openChanRes.id] = openChanRes.openChanRes;
+    const channel = new Channel(this, openChanRes.openChanRes);
 
-    return openChanRes.openChanRes;
+    this.channels[openChanRes.openChanRes.id] = channel;
+
+    return channel;
   }
 
   async closeChannel(id: number, action?: ReplitProtocol.CloseChannel.Action) {
@@ -111,11 +113,15 @@ export class Crosis {
 
 export class Channel {
   private crosis: Crosis;
-  id: number;
+  private openChanRes: ReplitProtocol.OpenChannelRes;
 
-  constructor(crosis: Crosis, id: number) {
+  constructor(crosis: Crosis, openChanRes: ReplitProtocol.OpenChannelRes) {
     this.crosis = crosis;
-    this.id = id;
+    this.openChanRes = openChanRes;
+  }
+
+  get id() {
+    return this.openChanRes.id;
   }
 
   send(...args: Parameters<Crosis["send"]>) {

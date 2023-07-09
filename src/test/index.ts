@@ -20,8 +20,7 @@ crosis.connect().then(async () => {
 
   console.log('Opened GCSFiles channel!');
 
-  const fileRes = await crosis.send({
-    channel: gcsFilesChannel.id,
+  const fileRes = await gcsFilesChannel.send({
     read: {
       path: 'test.txt'
     }
