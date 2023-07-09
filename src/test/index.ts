@@ -19,4 +19,15 @@ crosis.connect().then(async () => {
   const gcsFilesChannel = await crosis.openChannel({
     service: "gcsfiles",
   });
+
+  console.log('Opened GCSFiles channel!');
+
+  const fileRes = await crosis.send({
+    channel: gcsFilesChannel.id,
+    read: {
+      path: 'test.txt'
+    }
+  });
+
+  console.log('Contents of test.txt:', fileRes.file.content.toString());
 });
