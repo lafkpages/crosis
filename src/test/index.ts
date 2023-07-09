@@ -11,6 +11,7 @@ const crosis = new Crosis({
     replId: process.env.REPL_ID,
     sid: process.env.REPLIT_SID,
   }),
+  debug: true,
 });
 
 crosis.connect().then(async () => {
