@@ -45,7 +45,9 @@ export class Crosis {
 
   send(message: any) {
     this.ws.send(
-      ReplitProtocol.Command.encode(ReplitProtocol.Command.create(message))
+      ReplitProtocol.Command.encode(
+        ReplitProtocol.Command.create(message)
+      ).finish()
     );
   }
 
