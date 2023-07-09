@@ -15,9 +15,10 @@
     "replit",
     "repl.it"
   ],
-  "author": "LuisAFK",
+  "author": "LuisAFK, Erik Ga",
   "contributors": [
-    "Erik Ga"
+    "Erik Ga",
+    "LuisAFK"
   ],
   "license": "AGPL-3.0",
   "devDependencies": {
