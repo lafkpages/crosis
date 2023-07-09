@@ -1,6 +1,8 @@
 import { Crosis } from "..";
 import { replit } from "../lib/adapters";
-import ".env";
+
+import { config as dotenv } from "dotenv";
+dotenv();
 
 // This is a basic test
 // If it outputs nothing it works
