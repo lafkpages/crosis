@@ -1,6 +1,6 @@
 entrypoint = ".gitignore"
 
-hidden = [".config", "package-lock.json"]
+hidden = [".config", "package-lock.json", "dist"]
 
 [interpreter]
 command = [
