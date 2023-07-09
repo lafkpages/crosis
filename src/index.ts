@@ -1,11 +1,13 @@
 import { WebSocket } from "ws";
+import { api as ReplitProtocol } from "@replit/protocol";
+
 import type { CrosisOptions, Adapter } from "./lib/types";
 
 const defaultOptions: CrosisOptions = {
   autoConnect: true,
 };
 
-class Crosis {
+export class Crosis {
   private url: string | null;
   private adapter: Adapter | null;
   private ws: WebSocket;
