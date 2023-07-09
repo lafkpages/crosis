@@ -103,4 +103,8 @@ export class Crosis {
 
     return closeChanRes.closeChanRes;
   }
+
+  async disconnect() {
+    await this.ws.close();
+  }
 }
