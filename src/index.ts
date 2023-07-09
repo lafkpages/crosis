@@ -12,6 +12,8 @@ export class Crosis {
   private debug: boolean;
   private refHandlers: Record<string, Function>;
   private channels: Record<number, Channel>;
+  bootStatus: ReplitProtocol.BootStatus.Stage | null;
+  containerState: ReplitProtocol.ContainerState.State | null;
 
   constructor(options: CrosisOptions) {
     options = {
@@ -29,6 +31,9 @@ export class Crosis {
     this.refHandlers = {};
 
     this.channels = {};
+
+    this.bootStatus = null;
+    this.containerState = null;
   }
 
   async connect() {
@@ -51,6 +56,16 @@ export class Crosis {
 
       if (this.debug) {
         console.log(message);
+      }
+
+      // Save boot status
+      if (typeof message.bootStatus?.stage == 'number') {
+        this.bootStatus = message.bootStatus.stage;
+      }
+
+      // Save container state
+      if (typeof message.containerState?.state == 'number') {
+        this.containerState = message.containerState.state;
       }
 
       // Run handler for this ref
