@@ -4,7 +4,8 @@ run = "npm run test"
 hidden = [
   ".config",
   "package-lock.json",
-  "dist"
+  "dist",
+  ".vscode"
 ]
 
 # [interpreter]
