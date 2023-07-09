@@ -4,7 +4,7 @@
   "description": "",
   "main": "dist/index.js",
   "scripts": {
-    "test": "npm run build & node dist/test",
+    "test": "npm run build; node dist/test",
     "format": "prettier --write .",
     "build": "tsc"
   },
