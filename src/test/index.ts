@@ -13,6 +13,10 @@ const crosis = new Crosis({
   }),
 });
 
-crosis.connect().then(() => {
+crosis.connect().then(async () => {
   console.log("Crosis connected!");
+
+  const gcsFilesChannel = await crosis.openChannel({
+    service: "gcsfiles",
+  });
 });
