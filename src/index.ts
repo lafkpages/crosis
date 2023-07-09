@@ -56,7 +56,7 @@ export class Crosis {
     return Math.random().toString(36).substring(2);
   }
 
-  send(message: any, autoRef = true) {
+  send(message: any, autoRef = true): Promise<ReplitProtocol.Command> {
     if (autoRef && !message.ref) {
       message.ref = this.generateRef();
     }
@@ -72,10 +72,12 @@ export class Crosis {
     });
   }
 
-  openChannel(options: ReplitProtocol.OpenChannel) {
-    this.send({
+  async openChannel(options: ReplitProtocol.OpenChannel) {
+    const openChanRes = await this.send({
       channel: 0,
       openChan: options,
     });
+
+    return openChanRes.openChanRes;
   }
 }
