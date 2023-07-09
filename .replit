@@ -5,7 +5,8 @@ hidden = [
   ".config",
   "package-lock.json",
   "dist",
-  ".vscode"
+  ".vscode",
+  "LICENSE"
 ]
 
 # [interpreter]
