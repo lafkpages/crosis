@@ -9,6 +9,7 @@ export class Crosis {
   private url: string | null;
   private adapter: Adapter | null;
   private ws: WebSocket;
+  private refHandlers: Record<string, Function>;
 
   constructor(options: CrosisOptions) {
     options = {
@@ -20,6 +21,8 @@ export class Crosis {
 
     this.url = options.url || undefined;
     this.ws = null;
+
+    this.refHandlers = {};
   }
 
   async connect() {
@@ -40,15 +43,33 @@ export class Crosis {
     this.ws.onmessage = (event) => {
       const message = ReplitProtocol.Command.decode(event.data);
       console.log(message);
+
+      // Run handler for this ref
+      if (message.ref && this.refHandlers[message.ref]) {
+        this.refHandlers[message.ref](message);
+      }
     };
   }
 
-  send(message: any) {
+  generateRef() {
+    // Return a random string
+    return Math.random().toString(36).substring(2);
+  }
+
+  send(message: any, autoRef = true) {
+    if (autoRef && !message.ref) {
+      message.ref = this.generateRef();
+    }
+
     this.ws.send(
       ReplitProtocol.Command.encode(
         ReplitProtocol.Command.create(message)
       ).finish()
     );
+
+    return new Promise((resolve) => {
+      this.refHandlers[message.ref] = resolve;
+    });
   }
 
   openChannel(options: ReplitProtocol.OpenChannel) {
@@ -56,7 +77,5 @@ export class Crosis {
       channel: 0,
       openChan: options,
     });
-
-    // TODO: await for the openChanRes response
   }
 }
