@@ -29,9 +29,5 @@ crosis.connect().then(async () => {
 
   console.log('Contents of test.txt:', fileRes.file.content.toString());
 
-  await crosis.closeChannel(gcsFilesChannel.id);
-
-  console.log('Closed GCSFiles channel!');
-
   crosis.disconnect();
 });
