@@ -108,3 +108,23 @@ export class Crosis {
     this.ws.close();
   }
 }
+
+export class Channel {
+  private crosis: Crosis;
+  id: number;
+
+  constructor(crosis: Crosis, id: number) {
+    this.crosis = crosis;
+    this.id = id;
+  }
+
+  send(...args: Parameters<Crosis["send"]>) {
+    args[0].channel = this.id;
+
+    return this.crosis.send(...args);
+  }
+
+  close(action?: ReplitProtocol.CloseChannel.Action) {
+    return this.crosis.closeChannel(this.id, action);
+  }
+}
