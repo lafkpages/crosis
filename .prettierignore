@@ -1,0 +1,10 @@
+# Transpiled TS
+dist
+
+# Git
+.git
+
+# Replit stuff
+.config
+.cache
+.upm
