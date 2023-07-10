@@ -1,10 +1,10 @@
-import { Crosis, adapterReplit } from "../dist/index";
+import { Crosis, adapterReplit } from "../dist/index.js";
 
 // Load dutenv
 import { config as dotenv } from "dotenv";
 dotenv();
 
-// This is a basic test
+// This is a basic test🗿
 const crosis = new Crosis({
   adapter: adapterReplit({
     replId: process.env.REPL_ID,
