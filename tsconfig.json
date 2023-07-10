@@ -6,10 +6,6 @@
     "rootDir": "src",
     "outDir": "dist",
     "lib": ["ES6"],
-    "paths": {
-      "$lib": ["./src/lib"],
-      "$lib/*": ["./src/lib/*"]
-    },
     "declaration": true,
     "emitDeclarationOnly": true
   },

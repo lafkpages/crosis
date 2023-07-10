@@ -1,1 +1,1 @@
-export { replit } from "$lib/adapters/replit.js";
+export { replit } from "./replit.js";

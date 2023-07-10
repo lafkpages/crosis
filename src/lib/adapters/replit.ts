@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import type { Adapter } from "$lib/types";
+import type { Adapter } from "../types";
 
 export interface ReplitAdapterOptionsBySid {
   replId: string;

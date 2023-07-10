@@ -3,7 +3,7 @@ import { api as protocol } from "@replit/protocol"; //!*/
 
 import { WebSocket } from "ws";
 
-import type { CrosisOptions, Adapter } from "$lib/types";
+import type { CrosisOptions, Adapter } from "./types";
 import { Channel } from "./channel.js";
 
 const defaultOptions: CrosisOptions = {};

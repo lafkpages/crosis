@@ -3,7 +3,7 @@
 
 import { api as protocol } from "@replit/protocol";
 
-import { Crosis } from "$lib/crosis.js";
+import { Crosis } from "./crosis.js";
 
 export class Channel {
   private crosis: Crosis;
