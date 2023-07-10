@@ -57,7 +57,20 @@ class Crosis {
 
     // Add event listeners
     this.ws.onmessage = (event) => {
-      const message = protocol.Command.decode(event.data);
+      if (typeof event.data == "string") {
+        return;
+      }
+
+      let data: Uint8Array;
+      if (event.data instanceof Uint8Array) {
+        data = event.data;
+      } else if (event.data instanceof ArrayBuffer || event.data instanceof Buffer) {
+        data = new Uint8Array(event.data);
+      } else {
+        return;
+      }
+
+      const message = protocol.Command.decode(data);
 
       if (this.debug) {
         console.log(message);
