@@ -1,5 +1,5 @@
-import { Crosis } from "../index";
-import { replit } from "$lib/adapters";
+import { Crosis } from "../lib/crosis";
+import { replit } from "../lib/adapters/replit";
 
 import { config as dotenv } from "dotenv";
 dotenv();
