@@ -1,4 +1,5 @@
-import * as protocol from "@replit/protocol";
+import * as protocol from "@replit/protocol"; //!*/
+// The short comment at the end cannot be removed
 
 import { WebSocket } from "ws";
 

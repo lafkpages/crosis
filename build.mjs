@@ -9,7 +9,7 @@ const sharedConfig = {
   entryPoints: [entryFile],
   external: Object.keys(dependencies),
   logLevel: "info",
-  minify: true,
+  minify: false,
   sourcemap: true,
 };
 
@@ -18,6 +18,10 @@ await build({
   format: "esm",
   outfile: "./dist/index.esm.js",
   target: ["esnext", "node12.22.0"],
+  banner: {
+    js: "import*as _r_p from'@replit/protocol';const protocol=_r_p.default;import{WebSocket}from'ws'/*",
+  },
+  legalComments: "inline",
 });
 
 await build({

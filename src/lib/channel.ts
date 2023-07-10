@@ -1,3 +1,6 @@
+//!*/
+// Don't remove this comment
+
 import * as protocol from "@replit/protocol";
 
 import { Crosis } from "$lib/crosis.js";
