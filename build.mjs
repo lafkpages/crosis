@@ -25,4 +25,5 @@ await build({
   ...sharedConfig,
   format: "cjs",
   outExtension: { ".js": ".cjs" },
+  plugins: [],
 });
