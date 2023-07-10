@@ -1,4 +1,4 @@
-import * as esbuild from "esbuild";
+import { build } from "esbuild";
 import nodepkgs from "./package.json" assert { type: "json" };
 
 const dependencies = nodepkgs.dependencies;
@@ -13,14 +13,14 @@ const sharedConfig = {
   sourcemap: true,
 };
 
-await esbuild.build({
+await build({
   ...sharedConfig,
   format: "esm",
   outfile: "./dist/index.esm.js",
   target: ["esnext", "node12.22.0"],
 });
 
-await esbuild.build({
+await build({
   ...sharedConfig,
   format: "cjs",
   outfile: "./dist/index.cjs.js",
