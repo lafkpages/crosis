@@ -7,8 +7,8 @@
   "types": "dist/index.d.ts",
   "exports": {
     "import": "./dist/index.js",
-    "require": "./dist/index.cjs.js",
-    "default": "./dist/index.cjs.js"
+    "require": "./dist/index.cjs",
+    "default": "./dist/index.cjs"
   },
   "type": "module",
   "files": [
