@@ -1,3 +1,3 @@
-import { Crosis } from "$lib/crosis";
+import { Crosis } from "$lib/crosis.js";
 
 export { Crosis };
