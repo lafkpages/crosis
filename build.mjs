@@ -1,4 +1,5 @@
 import { build } from "esbuild";
+import { transformExtPlugin } from "@gjsify/esbuild-plugin-transform-ext";
 
 const sharedConfig = {
   bundle: false,
@@ -25,5 +26,9 @@ await build({
   ...sharedConfig,
   format: "cjs",
   outExtension: { ".js": ".cjs" },
-  plugins: [],
+  plugins: [
+    transformExtPlugin({
+      outExtension: { ".js": ".cjs" },
+    }),
+  ],
 });
