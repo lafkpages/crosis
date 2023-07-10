@@ -19,6 +19,7 @@
     "test": "node dist/test",
     "format": "prettier --write .",
     "build": "node ./build.mjs",
+    "postbuild": "tsc",
     "prepare": "npm run build",
     "version": "npm run format"
   },

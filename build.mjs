@@ -1,13 +1,14 @@
 import { build } from "esbuild";
-import nodepkgs from "./package.json" assert { type: "json" };
 
-const dependencies = nodepkgs.dependencies;
-
-const entryFile = "./src/index.ts";
 const sharedConfig = {
-  bundle: true,
-  entryPoints: [entryFile],
-  external: Object.keys(dependencies),
+  bundle: false,
+  entryPoints: [
+    "./src/index.ts",
+    "./src/lib/crosis.ts",
+    "./src/lib/channel.ts",
+    "./src/lib/adapters/index.ts",
+    "./src/lib/adapters/replit.ts",
+  ], // TODO: use glob
   logLevel: "info",
   minify: false,
   sourcemap: true,
@@ -16,7 +17,7 @@ const sharedConfig = {
 await build({
   ...sharedConfig,
   format: "esm",
-  outfile: "./dist/index.mjs",
+  outdir: "dist",
   target: ["esnext", "node12.22.0"],
   banner: {
     js: "import*as _r_p from'@replit/protocol';const protocol=_r_p.default.api;import{WebSocket}from'ws'/*",
@@ -37,6 +38,7 @@ await build({
 await build({
   ...sharedConfig,
   format: "cjs",
-  outfile: "./dist/index.cjs",
+  outdir: "dist",
+  outExtension: { ".js": ".cjs" },
   target: ["esnext", "node12.22.0"],
 });
