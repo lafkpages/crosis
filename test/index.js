@@ -1,13 +1,13 @@
-import { Crosis } from "../lib/crosis.js";
-import { replit } from "../lib/adapters/replit.js";
+import { Crosis } from "../dist/index.esm.js";
 
-import { config as dotenv } from "dotenv";
-dotenv();
+import { adapterReplit } from "../dist/index.esm.js"; // u think this works? ig
+
+// Load dutenv
+require("dotenv").config();
 
 // This is a basic test
-// If it outputs nothing it works
 const crosis = new Crosis({
-  adapter: replit({
+  adapter: adapterReplit({
     replId: process.env.REPL_ID,
     sid: process.env.REPLIT_SID,
   }),
