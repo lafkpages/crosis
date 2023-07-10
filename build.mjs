@@ -20,6 +20,16 @@ await build({
   target: ["esnext", "node12.22.0"],
   banner: {
     js: "import*as _r_p from'@replit/protocol';const protocol=_r_p.default.api;import{WebSocket}from'ws'/*",
+
+    /* 
+      This is a really hacky trick.
+
+      Because @replit/protocol types are broken, the imports
+      used in src/lib/crosis.ts and src/lib/channels.ts aren't
+      actually valid, but they make the types work. So here,
+      we comment out those invalid imports and replace them
+      with ones that actually work.
+    */
   },
   legalComments: "inline",
 });
