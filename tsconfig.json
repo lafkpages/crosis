@@ -9,7 +9,8 @@
     "paths": {
       "$lib": ["./src/lib"],
       "$lib/*": ["./src/lib/*"]
-    }
+    },
+    "declaration": true
   },
   "exclude": ["dist"]
 }
