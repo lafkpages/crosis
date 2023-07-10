@@ -16,9 +16,11 @@
     "README.md"
   ],
   "scripts": {
-    "test": "npm run build; node dist/test",
+    "test": "node dist/test",
     "format": "prettier --write .",
-    "build": "node ./build.mjs"
+    "build": "node ./build.mjs",
+    "prepare": "npm run build",
+    "version": "npm run format"
   },
   "keywords": [
     "crosis",

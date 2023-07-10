@@ -16,7 +16,7 @@ const sharedConfig = {
 await build({
   ...sharedConfig,
   format: "esm",
-  outfile: "./dist/index.esm.js",
+  outfile: "./dist/index.mjs",
   target: ["esnext", "node12.22.0"],
   banner: {
     js: "import*as _r_p from'@replit/protocol';const protocol=_r_p.default.api;import{WebSocket}from'ws'/*",
