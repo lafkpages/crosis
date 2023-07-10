@@ -1,7 +1,7 @@
 {
   "name": "crosis",
   "version": "0.0.1",
-  "description": "",
+  "description": "Crosis done just right",
   "main": "dist/index.js",
   "files": [
     "dist"
