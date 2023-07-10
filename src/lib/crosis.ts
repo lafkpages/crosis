@@ -1,5 +1,4 @@
-import { api as protocol } from "@replit/protocol"; //!*/
-// The short comment at the end cannot be removed
+import { api as protocol } from "@replit/protocol";
 
 import { WebSocket } from "ws";
 

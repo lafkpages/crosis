@@ -1,6 +1,3 @@
-//!*/
-// Don't remove this comment
-
 import { api as protocol } from "@replit/protocol";
 
 import { Crosis } from "./crosis.js";
