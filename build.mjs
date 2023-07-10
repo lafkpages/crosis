@@ -5,4 +5,5 @@ await esbuild.build({
   outdir: "./dist",
 });
 
-// Could
+// Could also be run as:
+// esbuild --outdir=./dist ./src/index.ts
