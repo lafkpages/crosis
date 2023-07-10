@@ -10,7 +10,7 @@
   "scripts": {
     "test": "npm run build; node dist/test",
     "format": "prettier --write .",
-    "build": "tsc"
+    "build": "node ./build.mjs"
   },
   "keywords": [
     "crosis",
@@ -28,8 +28,8 @@
   "devDependencies": {
     "@types/node-fetch": "^2.6.4",
     "dotenv": "^16.3.1",
-    "prettier": "^3.0.0",
-    "typescript": "^5.1.6"
+    "esbuild": "^0.18.11",
+    "prettier": "^3.0.0"
   },
   "dependencies": {
     "@replit/protocol": "^0.3.16",
