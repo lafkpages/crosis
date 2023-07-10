@@ -1,6 +1,6 @@
-import { Crosis } from "$lib/crosis.js";
-
 import * as protocol from "@replit/protocol";
+
+import { Crosis } from "$lib/crosis.js";
 
 export class Channel {
   private crosis: Crosis;

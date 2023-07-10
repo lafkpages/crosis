@@ -1,6 +1,6 @@
-import { WebSocket } from "ws";
-
 import * as protocol from "@replit/protocol";
+
+import { WebSocket } from "ws";
 
 import type { CrosisOptions, Adapter } from "$lib/types";
 import { Channel } from "./channel.js";
