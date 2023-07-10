@@ -1,12 +1,12 @@
 {
   "name": "crosis",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Crosis done just right",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "exports": {
-    "import": "./dist/index.esm.js",
+    "import": "./dist/index.js",
     "require": "./dist/index.cjs.js",
     "default": "./dist/index.cjs.js"
   },
