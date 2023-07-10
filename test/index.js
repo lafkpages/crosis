@@ -3,7 +3,8 @@ import { Crosis } from "../dist/index.esm.js";
 import { adapterReplit } from "../dist/index.esm.js"; // u think this works? ig
 
 // Load dutenv
-require("dotenv").config();
+import { config as dotenv } from "dotenv";
+dotenv();
 
 // This is a basic test
 const crosis = new Crosis({
