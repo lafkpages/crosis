@@ -1,6 +1,4 @@
-import { Crosis } from "../dist/index.esm.js";
-
-import { adapterReplit } from "../dist/index.esm.js"; // u think this works? ig
+import { Crosis, adapterReplit } from "../dist/index.js";
 
 // Load dutenv
 import { config as dotenv } from "dotenv";
