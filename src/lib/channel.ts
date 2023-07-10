@@ -1,7 +1,6 @@
 import { Crosis } from "$lib/crosis.js";
 
-import _protocol from "@replit/protocol";
-const { api: protocol } = _protocol;
+import { api as protocol } from "@replit/protocol";
 
 export class Channel {
   private crosis: Crosis;
