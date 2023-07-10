@@ -7,13 +7,9 @@
     "outDir": "dist",
     "lib": ["ES6"],
     "paths": {
-			"$lib": [
-				"./src/lib"
-			],
-			"$lib/*": [
-				"./src/lib/*"
-			]
-		}
+      "$lib": ["./src/lib"],
+      "$lib/*": ["./src/lib/*"]
+    }
   },
   "exclude": ["dist"]
 }
