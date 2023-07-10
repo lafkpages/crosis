@@ -1,14 +1,14 @@
 import { Crosis } from "$lib/crosis.js";
 
-import { api as protocol } from "@replit/protocol";
+import * as protocol from "@replit/protocol";
 
 export class Channel {
   private crosis: Crosis;
-  private openChanRes: protocol.OpenChannelRes;
+  private openChanRes: protocol.api.OpenChannelRes;
 
   constructor(
     crosis: Crosis,
-    openChanRes: protocol.OpenChannelRes
+    openChanRes: protocol.api.OpenChannelRes
   ) {
     this.crosis = crosis;
     this.openChanRes = openChanRes;
@@ -24,7 +24,7 @@ export class Channel {
     return this.crosis.send(...args);
   }
 
-  close(action?: protocol.CloseChannel.Action) {
+  close(action?: protocol.api.CloseChannel.Action) {
     return this.crosis.closeChannel(this.id, action);
   }
 }
