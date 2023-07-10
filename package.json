@@ -18,7 +18,7 @@
   "scripts": {
     "test": "npm run build; node dist/test",
     "format": "prettier --write .",
-    "build": "node ./build.mjs"
+    "build": "rm -rf dist; node ./build.mjs"
   },
   "keywords": [
     "crosis",
