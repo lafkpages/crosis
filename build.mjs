@@ -37,6 +37,6 @@ await build({
 await build({
   ...sharedConfig,
   format: "cjs",
-  outfile: "./dist/index.cjs.js",
+  outfile: "./dist/index.cjs",
   target: ["esnext", "node12.22.0"],
 });
