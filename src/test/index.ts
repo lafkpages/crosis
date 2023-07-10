@@ -1,4 +1,4 @@
-import { Crosis } from "..";
+import { Crosis } from "../index";
 import { replit } from "$lib/adapters";
 
 import { config as dotenv } from "dotenv";
