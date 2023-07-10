@@ -15,6 +15,7 @@ class Crosis {
   private debug: boolean;
   private refHandlers: Record<string, Function>;
   private channels: Record<number, Channel>;
+  private channelsByName: Record<string, number>;
   bootStatus: protocol.BootStatus.Stage | null;
   containerState: protocol.ContainerState.State | null;
 
@@ -34,6 +35,7 @@ class Crosis {
     this.refHandlers = {};
 
     this.channels = {};
+    this.channelsByName = {};
 
     this.bootStatus = null;
     this.containerState = null;
@@ -115,6 +117,15 @@ class Crosis {
 
     this.channels[openChanRes.openChanRes.id] = channel;
 
+    // Make findable by channel name later on
+    if (name) {
+      if (name in this.channelsByName) {
+        throw new Error(`Channel already exists with name "${name}"`);
+      }
+
+      this.channelsByName[name] = openChanRes.openChanRes.id;
+    }
+
     return channel;
   }
 
@@ -141,6 +152,10 @@ class Crosis {
     }
 
     this.ws.close();
+  }
+
+  getChannelIdByName(name: string) {
+    return this.channelsByName[name];
   }
 }
 
