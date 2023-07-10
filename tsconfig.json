@@ -10,7 +10,8 @@
       "$lib": ["./src/lib"],
       "$lib/*": ["./src/lib/*"]
     },
-    "declaration": true
+    "declaration": true,
+    "emitDeclarationOnly": true
   },
   "exclude": ["dist"]
 }
