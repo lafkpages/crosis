@@ -1,4 +1,5 @@
-import { api as protocol } from "@replit/protocol";
+import _protocol from "@replit/protocol";
+import protocol = _protocol.api;
 
 import { WebSocket } from "ws";
 
