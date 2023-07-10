@@ -49,5 +49,9 @@
     "@replit/protocol": "^0.3.16",
     "node-fetch": "^2.6.12",
     "ws": "^8.13.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lafkpages/crosis.git"
   }
 }
