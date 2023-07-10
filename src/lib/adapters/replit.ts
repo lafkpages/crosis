@@ -12,7 +12,9 @@ export interface ReplitAdapterOptionsByToken {
   cluster: string;
 }
 
-export type ReplitAdapterOptions = ReplitAdapterOptionsBySid | ReplitAdapterOptionsByToken;
+export type ReplitAdapterOptions =
+  | ReplitAdapterOptionsBySid
+  | ReplitAdapterOptionsByToken;
 
 export interface ReplitMetadata {
   token?: string;
@@ -46,12 +48,12 @@ async function replitAdapter() {
           cookie: `connect.sid=${encodeURIComponent(options.sid)}`,
         },
         body: "{}",
-      }
+      },
     );
 
     if (!metadataReq.ok) {
       throw new Error(
-        `Replit metadata request was not successful. Did you enter the correct connect.sid? ${await metadataReq.text()}`
+        `Replit metadata request was not successful. Did you enter the correct connect.sid? ${await metadataReq.text()}`,
       );
     }
 

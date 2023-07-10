@@ -59,12 +59,12 @@ export class Crosis {
       }
 
       // Save boot status
-      if (typeof message.bootStatus?.stage == 'number') {
+      if (typeof message.bootStatus?.stage == "number") {
         this.bootStatus = message.bootStatus.stage;
       }
 
       // Save container state
-      if (typeof message.containerState?.state == 'number') {
+      if (typeof message.containerState?.state == "number") {
         this.containerState = message.containerState.state;
       }
 
@@ -86,9 +86,7 @@ export class Crosis {
     }
 
     this.ws.send(
-      protocol.Command.encode(
-        protocol.Command.create(message)
-      ).finish()
+      protocol.Command.encode(protocol.Command.create(message)).finish(),
     );
 
     return new Promise((resolve) => {
@@ -96,13 +94,17 @@ export class Crosis {
     });
   }
 
-  async openChannel(service: string, name?: string, action?: protocol.OpenChannel.Action) {
+  async openChannel(
+    service: string,
+    name?: string,
+    action?: protocol.OpenChannel.Action,
+  ) {
     const openChanRes = await this.send({
       channel: 0,
       openChan: {
         service,
-        name: name || '',
-        action: action || protocol.OpenChannel.Action.ATTACH_OR_CREATE
+        name: name || "",
+        action: action || protocol.OpenChannel.Action.ATTACH_OR_CREATE,
       },
     });
 
@@ -118,8 +120,8 @@ export class Crosis {
       channel: 0,
       closeChan: {
         id,
-        action: action || protocol.CloseChannel.Action.TRY_CLOSE
-      }
+        action: action || protocol.CloseChannel.Action.TRY_CLOSE,
+      },
     });
 
     delete this.channels[id];
