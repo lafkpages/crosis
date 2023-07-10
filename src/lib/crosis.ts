@@ -4,7 +4,7 @@ import protocol = _protocol.api;
 import { WebSocket } from "ws";
 
 import type { CrosisOptions, Adapter } from "./types";
-import { Channel } from "./channel.js";
+import { Channel } from "./channel";
 
 const defaultOptions: CrosisOptions = {};
 

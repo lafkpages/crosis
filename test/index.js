@@ -1,4 +1,4 @@
-import { Crosis, adapterReplit } from "../dist/index.js";
+import { Crosis, adapterReplit } from "../dist/index";
 
 // Load dutenv
 import { config as dotenv } from "dotenv";

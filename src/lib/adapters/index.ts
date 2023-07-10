@@ -1,1 +1,1 @@
-export { replit } from "./replit.js";
+export { replit } from "./replit";
