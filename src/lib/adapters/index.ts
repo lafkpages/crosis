@@ -1,3 +1,1 @@
-import replit from "./replit";
-
-export { replit };
+export { replit } from "./replit";

@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import type { Adapter } from "../types";
+import type { Adapter } from "$lib/types";
 
 export interface ReplitAdapterOptionsBySid {
   replId: string;
@@ -65,6 +65,6 @@ async function replitAdapter() {
   };
 }
 
-export default function replit(options: ReplitAdapterOptions): Adapter {
+export function replit(options: ReplitAdapterOptions): Adapter {
   return replitAdapter.bind(options);
 }

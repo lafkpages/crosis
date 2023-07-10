@@ -1,7 +1,7 @@
 import { WebSocket } from "ws";
 import { api as protocol } from "@replit/protocol";
 
-import type { CrosisOptions, Adapter } from "./lib/types";
+import type { CrosisOptions, Adapter } from "$lib/types";
 
 const defaultOptions: CrosisOptions = {};
 
