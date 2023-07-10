@@ -3,10 +3,9 @@ import nodepkgs from "./package.json" assert { type: "json" };
 
 const dependencies = nodepkgs.dependencies;
 
-const entryFile = "./src/index.ts";
 const sharedConfig = {
   bundle: true,
-  entryPoints: [entryFile],
+  entryPoints: ["./src/index.ts", "./test/index.js"],
   external: Object.keys(dependencies),
   logLevel: "info",
   minify: true,
