@@ -19,7 +19,7 @@ await build({
   outfile: "./dist/index.esm.js",
   target: ["esnext", "node12.22.0"],
   banner: {
-    js: "import*as _r_p from'@replit/protocol';const protocol=_r_p.default;import{WebSocket}from'ws'/*",
+    js: "import*as _r_p from'@replit/protocol';const protocol=_r_p.default.api;import{WebSocket}from'ws'/*",
   },
   legalComments: "inline",
 });

@@ -1,4 +1,4 @@
-import * as protocol from "@replit/protocol"; //!*/
+import { api as protocol } from "@replit/protocol"; //!*/
 // The short comment at the end cannot be removed
 
 import { WebSocket } from "ws";
@@ -15,8 +15,8 @@ class Crosis {
   private debug: boolean;
   private refHandlers: Record<string, Function>;
   private channels: Record<number, Channel>;
-  bootStatus: protocol.api.BootStatus.Stage | null;
-  containerState: protocol.api.ContainerState.State | null;
+  bootStatus: protocol.BootStatus.Stage | null;
+  containerState: protocol.ContainerState.State | null;
 
   constructor(options: CrosisOptions) {
     options = {
@@ -55,7 +55,7 @@ class Crosis {
 
     // Add event listeners
     this.ws.onmessage = (event) => {
-      const message = protocol.api.Command.decode(event.data);
+      const message = protocol.Command.decode(event.data);
 
       if (this.debug) {
         console.log(message);
@@ -83,13 +83,13 @@ class Crosis {
     return Math.random().toString(36).substring(2);
   }
 
-  send(message: any, autoRef = true): Promise<protocol.api.Command> {
+  send(message: any, autoRef = true): Promise<protocol.Command> {
     if (autoRef && !message.ref) {
       message.ref = this.generateRef();
     }
 
     this.ws.send(
-      protocol.api.Command.encode(protocol.api.Command.create(message)).finish()
+      protocol.Command.encode(protocol.Command.create(message)).finish()
     );
 
     return new Promise((resolve) => {
@@ -100,14 +100,14 @@ class Crosis {
   async openChannel(
     service: string,
     name?: string,
-    action?: protocol.api.OpenChannel.Action
+    action?: protocol.OpenChannel.Action
   ) {
     const openChanRes = await this.send({
       channel: 0,
       openChan: {
         service,
         name: name || "",
-        action: action || protocol.api.OpenChannel.Action.ATTACH_OR_CREATE,
+        action: action || protocol.OpenChannel.Action.ATTACH_OR_CREATE,
       },
     });
 
@@ -118,12 +118,12 @@ class Crosis {
     return channel;
   }
 
-  async closeChannel(id: number, action?: protocol.api.CloseChannel.Action) {
+  async closeChannel(id: number, action?: protocol.CloseChannel.Action) {
     const closeChanRes = await this.send({
       channel: 0,
       closeChan: {
         id,
-        action: action || protocol.api.CloseChannel.Action.TRY_CLOSE,
+        action: action || protocol.CloseChannel.Action.TRY_CLOSE,
       },
     });
 
