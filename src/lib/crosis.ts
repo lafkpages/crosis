@@ -41,6 +41,10 @@ class Crosis {
     this.containerState = null;
   }
 
+  get wsReadyState() {
+    return this.ws?.readyState || WebSocket.CLOSED;
+  }
+
   async connect() {
     const adapterResult = this.adapter ? await this.adapter() : null;
 
