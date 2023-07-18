@@ -11,7 +11,7 @@ const defaultOptions: CrosisOptions = {};
 class Crosis {
   private url: string | null;
   private adapter: Adapter | null;
-  private ws: WebSocket;
+  private ws: WebSocket | null;
   private debug: boolean;
   private refHandlers: Record<string, Function>;
   private channels: Record<number, Channel>;
