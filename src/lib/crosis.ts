@@ -54,10 +54,22 @@ class Crosis extends EventEmitter {
     this.containerState = null;
   }
 
+  /**
+   * Returns the WebSocket ready state.
+   */
   get wsReadyState() {
     return this.ws?.readyState || WebSocket.CLOSED;
   }
 
+  /**
+   * Connects to the WebSocket server, waits for
+   * the WebSocket to be ready, and sets up all
+   * required event listeners.
+   * 
+   * When a connection is successful, the "connect"
+   * event is emitted, which can be listened to
+   * with `crosis.on("connect", () => { ... })`.
+   */
   async connect() {
     const adapterResult = this.adapter ? await this.adapter() : null;
 
@@ -116,11 +128,24 @@ class Crosis extends EventEmitter {
     this.emit('connect');
   }
 
+  /**
+   * Generates a random message ref.
+   */
   private generateRef() {
     // Return a random string
     return Math.random().toString(36).substring(2);
   }
 
+  /**
+   * Encodes the message, sends it, and returns a promise
+   * that resolves to the response message.
+   * 
+   * The response message is determined by the ref field.
+   * It will have the same ref as the original sent message.
+   * 
+   * If the message does not have a ref, one will be generated,
+   * unless autoRef is set to false.
+   */
   send(message: any, autoRef = true): Promise<protocol.Command> {
     if (autoRef && !message.ref) {
       message.ref = this.generateRef();
@@ -135,6 +160,14 @@ class Crosis extends EventEmitter {
     });
   }
 
+  /**
+   * Requests opening a channel for a specified service,
+   * with an optional unique channel name.
+   *
+   * Returns a promise that resolves to a Channel object
+   * if the channel was successfully opened. Otherwise,
+   * an error is thrown.
+   */
   async openChannel(
     service: string,
     name?: string,
@@ -168,6 +201,12 @@ class Crosis extends EventEmitter {
     return channel;
   }
 
+  /**
+   * Requests closing a channel with the specified ID.
+   * 
+   * Returns a promise that resolves to a CloseChannelRes
+   * object, no matter the outcome.
+   */
   async closeChannel(id: number, action?: protocol.CloseChannel.Action) {
     const closeChanRes = await this.send({
       channel: 0,
@@ -185,6 +224,10 @@ class Crosis extends EventEmitter {
     return closeChanRes.closeChanRes;
   }
 
+  /**
+   * Disconnects the WebSocket, and closes all
+   * previously opened channels.
+   */
   async disconnect(autoClose = true) {
     // Close all channels
     if (autoClose) {
@@ -199,6 +242,10 @@ class Crosis extends EventEmitter {
     this.emit('disconnect');
   }
 
+  /**
+   * Returns the ID of the channel with the
+   * specified name.
+   */
   getChannelIdByName(name: string) {
     return this.channelsByName[name];
   }

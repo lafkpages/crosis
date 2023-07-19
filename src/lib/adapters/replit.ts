@@ -65,6 +65,14 @@ async function replitAdapter() {
   };
 }
 
+/**
+ * Returns an adapter that connects to Replit's WebSocket server.
+ * This adapter handles the authentication process for you.
+ * 
+ * You can either pass a Goval `token` and `cluster`, which is instant,
+ * or a Replit `replId` and `sid`, which is slower since it requires
+ * an HTTP request to generate a Goval token for the specified user.
+ */
 export function replit(options: ReplitAdapterOptions): Adapter {
   return replitAdapter.bind(options);
 }
