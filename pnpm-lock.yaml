@@ -19,6 +19,9 @@ devDependencies:
   '@gjsify/esbuild-plugin-transform-ext':
     specifier: ^0.0.3
     version: 0.0.3
+  '@types/node':
+    specifier: ^20.4.2
+    version: 20.4.2
   '@types/node-fetch':
     specifier: ^2.6.4
     version: 2.6.4
