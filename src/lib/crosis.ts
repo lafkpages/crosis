@@ -10,6 +10,15 @@ import { EventEmitter } from "events";
 
 const defaultOptions: CrosisOptions = {};
 
+declare interface Crosis {
+  on(event: 'connect', listener: () => void): this;
+  on(event: 'disconnect', listener: () => void): this;
+  on(event: 'message', listener: (message: protocol.Command) => void): this;
+  on(event: 'openChannel', listener: (channel: Channel) => void): this;
+  on(event: 'closeChannel', listener: (closeChanRes: protocol.CloseChannelRes) => void): this;
+  on(event: string, listener: Function): this;
+}
+
 class Crosis extends EventEmitter {
   private url: string | null;
   private adapter: Adapter | null;
