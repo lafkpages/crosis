@@ -16,16 +16,10 @@ const crosis = new Crosis({
 crosis.connect().then(async () => {
   console.log("Crosis connected!");
 
-  const gcsFilesChannel = await crosis.openChannel("gcsfiles");
-  console.log("Opened GCSFiles channel!");
-
-  const fileRes = await gcsFilesChannel.send({
-    read: {
-      path: "test.txt",
-    },
-  });
-
-  console.log("Contents of test.txt:", fileRes.file.content.toString());
+  console.log(
+    "Contents of test.txt:",
+    (await crosis.readFile("test.txt")).toString()
+  );
 
   crosis.disconnect();
 });

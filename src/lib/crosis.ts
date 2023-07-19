@@ -27,6 +27,7 @@ class Crosis extends EventEmitter {
   private refHandlers: Record<string, Function>;
   private channels: Record<number, Channel>;
   private channelsByName: Record<string, number>;
+  private utilFuncsChannels: Record<string, number>;
   bootStatus: protocol.BootStatus.Stage | null;
   containerState: protocol.ContainerState.State | null;
 
@@ -49,6 +50,8 @@ class Crosis extends EventEmitter {
 
     this.channels = {};
     this.channelsByName = {};
+
+    this.utilFuncsChannels = {};
 
     this.bootStatus = null;
     this.containerState = null;
@@ -248,6 +251,45 @@ class Crosis extends EventEmitter {
    */
   getChannelIdByName(name: string) {
     return this.channelsByName[name];
+  }
+
+  private async startUtil(service: string) {
+    if (service in this.utilFuncsChannels) {
+      return this.channels[this.utilFuncsChannels[service]];
+    } else {
+      const channel = await this.openChannel(service);
+      this.utilFuncsChannels[service] = channel.id;
+      return channel;
+    }
+  }
+
+  /**
+   * Reads a file using GCSFiles.
+   */
+  async readFile(path: string) {
+    const chan = await this.startUtil("gcsfiles");
+
+    const resp = await chan.send({
+      read: {
+        path
+      }
+    });
+
+    return resp.file.content;
+  }
+
+  /**
+   * Writes a file using GCSFiles.
+   */
+  async writeFile(path: string, data: string | Buffer | Uint8Array) {
+    const chan = await this.startUtil("gcsfiles");
+
+    return await chan.send({
+      write: {
+        path,
+        content: data
+      }
+    });
   }
 }
 
