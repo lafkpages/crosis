@@ -22,7 +22,8 @@
     "build": "node ./build.mjs",
     "postbuild": "tsc",
     "prepare": "npm run build",
-    "version": "npm run format"
+    "version": "npm run format",
+    "docs": "typedoc src/index.ts"
   },
   "keywords": [
     "crosis",
