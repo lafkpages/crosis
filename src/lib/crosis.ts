@@ -6,9 +6,11 @@ import { WebSocket } from "ws";
 import type { CrosisOptions, Adapter } from "./types";
 import { Channel } from "./channel.js";
 
+import { EventEmitter } from "events";
+
 const defaultOptions: CrosisOptions = {};
 
-class Crosis {
+class Crosis extends EventEmitter {
   private url: string | null;
   private adapter: Adapter | null;
   private ws: WebSocket | null;
@@ -20,6 +22,8 @@ class Crosis {
   containerState: protocol.ContainerState.State | null;
 
   constructor(options: CrosisOptions) {
+    super();
+
     options = {
       ...defaultOptions,
       ...options,
@@ -94,7 +98,13 @@ class Crosis {
       if (message.ref && this.refHandlers[message.ref]) {
         this.refHandlers[message.ref](message);
       }
+
+      // Emit events
+      this.emit('message', message);
     };
+
+    // Emit events
+    this.emit('connect');
   }
 
   private generateRef() {
@@ -143,6 +153,9 @@ class Crosis {
       this.channelsByName[name] = openChanRes.openChanRes.id;
     }
 
+    // Emit events
+    this.emit('openChannel', channel);
+
     return channel;
   }
 
@@ -157,6 +170,9 @@ class Crosis {
 
     delete this.channels[id];
 
+    // Emit events
+    this.emit('closeChannel', closeChanRes.closeChanRes);
+
     return closeChanRes.closeChanRes;
   }
 
@@ -169,6 +185,9 @@ class Crosis {
     }
 
     this.ws.close();
+
+    // Emit events
+    this.emit('disconnect');
   }
 
   getChannelIdByName(name: string) {
