@@ -21,8 +21,8 @@
     "format": "prettier --write .",
     "build": "node ./build.mjs",
     "postbuild": "tsc",
-    "prepare": "npm run build",
-    "version": "npm run format",
+    "prepare": "pnpm build",
+    "version": "pnpm format",
     "docs": "typedoc src/index.ts"
   },
   "keywords": [
