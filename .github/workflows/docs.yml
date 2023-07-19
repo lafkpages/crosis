@@ -5,6 +5,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: TypeStrong/typedoc-action@v1
+      - uses: TypeStrong/typedoc-action
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
