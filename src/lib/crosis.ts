@@ -309,6 +309,21 @@ class Crosis extends EventEmitter {
       }
     });
   }
+
+  /**
+   * Lists files in a directory using GCSFiles.
+   */
+  async readDir(path: string) {
+    const chan = await this.startUtil("gcsfiles");
+
+    const resp = await chan.send({
+      readdir: {
+        path
+      }
+    });
+
+    return resp.files.files;
+  }
 }
 
 export { Crosis };
