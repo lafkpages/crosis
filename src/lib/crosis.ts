@@ -24,7 +24,7 @@ class Crosis extends EventEmitter {
   private adapter: Adapter | null;
   private ws: WebSocket | null;
   private debug: boolean;
-  private refHandlers: Record<string, Function>;
+  private refHandlers: Record<string, (message: protocol.Command) => void>;
   private channels: Record<number, Channel>;
   private channelsByName: Record<string, number>;
   private utilFuncsChannels: Record<string, number>;
@@ -167,7 +167,7 @@ class Crosis extends EventEmitter {
    * If the message does not have a ref, one will be generated,
    * unless autoRef is set to false.
    */
-  send(message: any, autoRef = true): Promise<protocol.Command> {
+  send(message: any, autoRef = true, throwErrors = true): Promise<protocol.Command> {
     if (autoRef && !message.ref) {
       message.ref = this.generateRef();
     }
@@ -176,8 +176,14 @@ class Crosis extends EventEmitter {
       protocol.Command.encode(protocol.Command.create(message)).finish()
     );
 
-    return new Promise((resolve) => {
-      this.refHandlers[message.ref] = resolve;
+    return new Promise((resolve, reject) => {
+      this.refHandlers[message.ref] = (message) => {
+        if (throwErrors && message.error) {
+          reject(message.error);
+        }
+
+        resolve(message);
+      };
     });
   }
 
