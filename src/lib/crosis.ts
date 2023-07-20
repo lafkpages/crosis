@@ -299,7 +299,7 @@ class Crosis extends EventEmitter {
       }
     });
 
-    return resp.file.content;
+    return resp.file?.content;
   }
 
   /**
