@@ -16,6 +16,8 @@ const crosis = new Crosis({
 crosis.connect().then(async () => {
   console.log("Crosis connected!");
 
+  console.log("Files:", await crosis.readDir("."));
+
   console.log(
     "Contents of test.txt:",
     (await crosis.readFile("test.txt")).toString()
