@@ -23,5 +23,10 @@ crosis.connect().then(async () => {
     (await crosis.readFile("test.txt")).toString()
   );
 
+  console.log(
+    "Testing exec:",
+    await crosis.exec(["echo", "yay hello from echo"])
+  );
+
   crosis.disconnect();
 });

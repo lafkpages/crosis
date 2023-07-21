@@ -11,11 +11,14 @@ import { EventEmitter } from "events";
 const defaultOptions: CrosisOptions = {};
 
 declare interface Crosis {
-  on(event: 'connect', listener: () => void): this;
-  on(event: 'disconnect', listener: () => void): this;
-  on(event: 'message', listener: (message: protocol.Command) => void): this;
-  on(event: 'openChannel', listener: (channel: Channel) => void): this;
-  on(event: 'closeChannel', listener: (closeChanRes: protocol.CloseChannelRes) => void): this;
+  on(event: "connect", listener: () => void): this;
+  on(event: "disconnect", listener: () => void): this;
+  on(event: "message", listener: (message: protocol.Command) => void): this;
+  on(event: "openChannel", listener: (channel: Channel) => void): this;
+  on(
+    event: "closeChannel",
+    listener: (closeChanRes: protocol.CloseChannelRes) => void
+  ): this;
   on(event: string, listener: Function): this;
 }
 
@@ -28,6 +31,8 @@ class Crosis extends EventEmitter {
   private channels: Record<number, Channel>;
   private channelsByName: Record<string, number>;
   private utilFuncsChannels: Record<string, number>;
+  private execUtilResolve: ((output: string) => void) | null;
+  private execUtilOutput: string | null;
   bootStatus: protocol.BootStatus.Stage | null;
   containerState: protocol.ContainerState.State | null;
 
@@ -55,11 +60,14 @@ class Crosis extends EventEmitter {
 
     this.bootStatus = null;
     this.containerState = null;
+
+    this.execUtilResolve = null;
+    this.execUtilOutput = null;
   }
 
   /**
    * Sets the adapter to use.
-   * 
+   *
    * Usually you'll want to specify the adapter
    * when instantiating Crosis, but you can also
    * set it later on.
@@ -86,7 +94,7 @@ class Crosis extends EventEmitter {
    * Connects to the WebSocket server, waits for
    * the WebSocket to be ready, and sets up all
    * required event listeners.
-   * 
+   *
    * When a connection is successful, the "connect"
    * event is emitted, which can be listened to
    * with `crosis.on("connect", () => { ... })`.
@@ -114,7 +122,10 @@ class Crosis extends EventEmitter {
       let data: Uint8Array;
       if (event.data instanceof Uint8Array) {
         data = event.data;
-      } else if (event.data instanceof ArrayBuffer || event.data instanceof Buffer) {
+      } else if (
+        event.data instanceof ArrayBuffer ||
+        event.data instanceof Buffer
+      ) {
         data = new Uint8Array(event.data);
       } else {
         return;
@@ -136,17 +147,28 @@ class Crosis extends EventEmitter {
         this.containerState = message.containerState.state;
       }
 
+      // Exec util
+      if (message.channel == this.utilFuncsChannels.exec) {
+        if (message.output) {
+          this.execUtilOutput += message.output;
+        } else if (message.ok) {
+          this.execUtilResolve(this.execUtilOutput);
+          this.execUtilResolve = null;
+          this.execUtilOutput = null;
+        }
+      }
+
       // Run handler for this ref
       if (message.ref && this.refHandlers[message.ref]) {
         this.refHandlers[message.ref](message);
       }
 
       // Emit events
-      this.emit('message', message);
+      this.emit("message", message);
     };
 
     // Emit events
-    this.emit('connect');
+    this.emit("connect");
   }
 
   /**
@@ -160,14 +182,18 @@ class Crosis extends EventEmitter {
   /**
    * Encodes the message, sends it, and returns a promise
    * that resolves to the response message.
-   * 
+   *
    * The response message is determined by the ref field.
    * It will have the same ref as the original sent message.
-   * 
+   *
    * If the message does not have a ref, one will be generated,
    * unless autoRef is set to false.
    */
-  send(message: any, autoRef = true, throwErrors = true): Promise<protocol.Command> {
+  send(
+    message: any,
+    autoRef = true,
+    throwErrors = true
+  ): Promise<protocol.Command> {
     if (autoRef && !message.ref) {
       message.ref = this.generateRef();
     }
@@ -223,14 +249,14 @@ class Crosis extends EventEmitter {
     }
 
     // Emit events
-    this.emit('openChannel', channel);
+    this.emit("openChannel", channel);
 
     return channel;
   }
 
   /**
    * Requests closing a channel with the specified ID.
-   * 
+   *
    * Returns a promise that resolves to a CloseChannelRes
    * object, no matter the outcome.
    */
@@ -246,7 +272,7 @@ class Crosis extends EventEmitter {
     delete this.channels[id];
 
     // Emit events
-    this.emit('closeChannel', closeChanRes.closeChanRes);
+    this.emit("closeChannel", closeChanRes.closeChanRes);
 
     return closeChanRes.closeChanRes;
   }
@@ -266,7 +292,7 @@ class Crosis extends EventEmitter {
     this.ws.close();
 
     // Emit events
-    this.emit('disconnect');
+    this.emit("disconnect");
   }
 
   /**
@@ -295,8 +321,8 @@ class Crosis extends EventEmitter {
 
     const resp = await chan.send({
       read: {
-        path
-      }
+        path,
+      },
     });
 
     return resp.file?.content;
@@ -311,8 +337,8 @@ class Crosis extends EventEmitter {
     return await chan.send({
       write: {
         path,
-        content: data
-      }
+        content: data,
+      },
     });
   }
 
@@ -324,11 +350,41 @@ class Crosis extends EventEmitter {
 
     const resp = await chan.send({
       readdir: {
-        path
-      }
+        path,
+      },
     });
 
     return resp.files.files;
+  }
+
+  /**
+   * Executes a shell command.
+   *
+   * Note that this is blocking, meaning that only
+   * one command can be executed at a time.
+   */
+  async exec(args: string[], env?: Record<string, string>) {
+    if (this.execUtilResolve) {
+      throw new Error("Cannot execute multiple commands at once");
+    }
+
+    const chan = await this.startUtil("exec");
+
+    this.execUtilOutput = "";
+
+    const promises = await Promise.all([
+      new Promise((resolve) => {
+        this.execUtilResolve = resolve;
+      }),
+      chan.send({
+        exec: {
+          args,
+          env,
+        },
+      }),
+    ]);
+
+    return promises[0];
   }
 }
 
