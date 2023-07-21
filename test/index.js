@@ -14,18 +14,25 @@ const crosis = new Crosis({
 });
 
 crosis.connect().then(async () => {
-  console.log("Crosis connected!");
+  console.log("\x1b[32;1m[TEST] Crosis connected!\x1b[0m");
 
-  console.log("Files:", await crosis.readDir("."));
+  const files = await crosis.readDir(".");
 
+  console.log("\x1b[32;1m[TEST] Files:\x1b[0m");
   console.log(
-    "Contents of test.txt:",
-    (await crosis.readFile("test.txt")).toString()
+    "\x1b[32;1m" +
+      files.map((f) => `[TEST] ${f.type ? "📂" : "📝"} ${f.path}`).join("\n") +
+      "\x1b[0m"
   );
 
   console.log(
-    "Testing exec:",
-    await crosis.exec(["echo", "yay hello from echo"])
+    "\x1b[32;1m[TEST] Contents of test.txt:",
+    (await crosis.readFile("test.txt")).toString() + "\x1b[0m"
+  );
+
+  console.log(
+    "\x1b[32;1m[TEST] Testing exec:",
+    (await crosis.exec(["echo", "yay hello from echo"])) + "\x1b[0m"
   );
 
   crosis.disconnect();
