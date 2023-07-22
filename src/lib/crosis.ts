@@ -291,6 +291,10 @@ class Crosis extends EventEmitter {
 
     this.ws.close();
 
+    // Reset exec util
+    this.execUtilResolve = null;
+    this.execUtilOutput = null;
+
     // Emit events
     this.emit("disconnect");
   }
