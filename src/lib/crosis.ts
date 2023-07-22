@@ -32,6 +32,7 @@ class Crosis extends EventEmitter {
   private channelsByName: Record<string, number>;
   private utilFuncsChannels: Record<string, number>;
   private execUtilResolve: ((output: string) => void) | null;
+  private execUtilReject: ((error: string | Error) => void) | null;
   private execUtilOutput: string | null;
   bootStatus: protocol.BootStatus.Stage | null;
   containerState: protocol.ContainerState.State | null;
@@ -62,6 +63,7 @@ class Crosis extends EventEmitter {
     this.containerState = null;
 
     this.execUtilResolve = null;
+    this.execUtilReject = null;
     this.execUtilOutput = null;
   }
 
@@ -154,6 +156,7 @@ class Crosis extends EventEmitter {
         } else if (message.ok) {
           this.execUtilResolve(this.execUtilOutput);
           this.execUtilResolve = null;
+          this.execUtilReject = null;
           this.execUtilOutput = null;
         }
       }
@@ -292,7 +295,9 @@ class Crosis extends EventEmitter {
     this.ws.close();
 
     // Reset exec util
+    this.execUtilReject?.("Disconnected");
     this.execUtilResolve = null;
+    this.execUtilReject = null;
     this.execUtilOutput = null;
 
     // Emit events
@@ -377,8 +382,9 @@ class Crosis extends EventEmitter {
     this.execUtilOutput = "";
 
     const promises = await Promise.all([
-      new Promise((resolve) => {
+      new Promise((resolve, reject) => {
         this.execUtilResolve = resolve;
+        this.execUtilReject = reject;
       }),
       chan.send({
         exec: {
