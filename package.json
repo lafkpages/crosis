@@ -19,7 +19,7 @@
   "scripts": {
     "test": "node test",
     "format": "prettier --write .",
-    "build": "node ./build.mjs",
+    "build": "node ./scripts/build.mjs",
     "postbuild": "tsc",
     "prepare": "pnpm build",
     "version": "pnpm format",
