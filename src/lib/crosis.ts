@@ -367,6 +367,19 @@ class Crosis extends EventEmitter {
   }
 
   /**
+   * Creates a directory using GCSFiles.
+   */
+  async createDir(path: string) {
+    const chan = await this.startUtil("gcsfiles");
+
+    return await chan.send({
+      mkdir: {
+        path,
+      },
+    });
+  }
+
+  /**
    * Executes a shell command.
    *
    * Note that this is blocking, meaning that only
