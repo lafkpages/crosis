@@ -23,7 +23,8 @@
     "postbuild": "tsc",
     "prepare": "pnpm build",
     "version": "pnpm format",
-    "docs": "typedoc src/index.ts"
+    "docs": "typedoc src/index.ts",
+    "repl": "node ./scripts/repl.mjs"
   },
   "keywords": [
     "crosis",
