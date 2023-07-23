@@ -26,6 +26,18 @@ const r = repl.start({
 r.context.crosis = crosis;
 r.context.Crosis = Crosis;
 
+// Create a .connect command
+r.defineCommand("connect", {
+  help: 'Connects the Crosis client to the Replit adapter. Usage: ".connect"',
+  action: crosis.connect,
+});
+
+// Create a .disconnect command
+r.defineCommand("disconnect", {
+  help: 'Disconnects the Crosis client from the Replit adapter. Usage: ".disconnect"',
+  action: crosis.disconnect,
+});
+
 // When REPL is closed, disconnect Crosis
 r.on("exit", async () => {
   console.log("REPL closed, disconnecting Crosis...");
