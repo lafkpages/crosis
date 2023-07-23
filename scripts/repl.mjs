@@ -20,6 +20,7 @@ const crosis = new Crosis({
 // Start REPL
 const r = repl.start({
   ignoreUndefined: true,
+  prompt: "crosis> ",
 });
 
 // Expose Crosis client to REPL
