@@ -1,3 +1,5 @@
+#!/usr/bin/env node
+
 // Crosis lib
 import { Crosis, adapterReplit } from "../dist/index.js";
 
