@@ -38,6 +38,10 @@ class Crosis extends EventEmitter {
   containerState: protocol.ContainerState.State | null;
 
   constructor(options: CrosisOptions) {
+    if (!options.url && !options.adapter) {
+      throw new Error("Either url or adapter must be specified");
+    }
+
     super();
 
     options = {
@@ -364,6 +368,19 @@ class Crosis extends EventEmitter {
     });
 
     return resp.files.files;
+  }
+
+  /**
+   * Creates a directory using GCSFiles.
+   */
+  async createDir(path: string) {
+    const chan = await this.startUtil("gcsfiles");
+
+    return await chan.send({
+      mkdir: {
+        path,
+      },
+    });
   }
 
   /**

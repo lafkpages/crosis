@@ -3,7 +3,7 @@
 ![npm](https://img.shields.io/npm/dt/crosis)
 ![npm](https://img.shields.io/npm/v/crosis)
 
-**crosis** is a NPM package that allows you to programmatically interact with your Replit repl.
+**crosis** is a NPM package that allows you to programmatically interact with your Replit Repl.
 Our goal is to make this process as easy and simple as possible.
 
 # 🔥Features
@@ -61,7 +61,7 @@ crosis.connect().then(async () => {
 
   // Disconnect crosis at the end of the script
   // Terminating or ending the script will also disconnect crosis
-  crosis.disconnect();
+  await crosis.disconnect();
 });
 ```
 

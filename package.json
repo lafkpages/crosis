@@ -1,6 +1,6 @@
 {
   "name": "crosis",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Crosis done just right",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
@@ -19,11 +19,12 @@
   "scripts": {
     "test": "node test",
     "format": "prettier --write .",
-    "build": "node ./build.mjs",
+    "build": "node ./scripts/build.mjs",
     "postbuild": "tsc",
     "prepare": "pnpm build",
     "version": "pnpm format",
-    "docs": "typedoc src/index.ts"
+    "docs": "typedoc src/index.ts",
+    "repl": "node ./scripts/repl.mjs"
   },
   "keywords": [
     "crosis",
