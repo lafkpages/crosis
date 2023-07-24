@@ -33,12 +33,18 @@ const { Crosis } = require("crosis");
 import { Crosis } from "crosis";
 
 // Create a Crosis object
+
+// You can connect to a Replit repl using the adapterReplit() function
 const crosis = new Crosis({
   adapter: adapterReplit({
     replId: YOUR_REPL_ID,
     sid: YOUR_REPLIT_SID,
   }),
-  debug: true,
+});
+
+// You can also specify a goval url
+const crosis = new Crosis({
+  url: "your goval url",
 });
 
 // Connect crosis
