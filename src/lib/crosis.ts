@@ -38,6 +38,10 @@ class Crosis extends EventEmitter {
   containerState: protocol.ContainerState.State | null;
 
   constructor(options: CrosisOptions) {
+    if (!options.url && !options.adapter) {
+      throw new Error("Either url or adapter must be specified");
+    }
+
     super();
 
     options = {
