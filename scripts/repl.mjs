@@ -37,6 +37,18 @@ r.defineCommand("connect", {
   },
 });
 
+// Create a .connect-local command
+r.defineCommand("connect-local", {
+  help: 'Connects the Crosis client to a local server. Usage: ".connect-local [port=4096]"',
+  action: (port) => {
+    port = parseInt(port) || 4096;
+
+    crosis.setAdapter(null);
+    crosis.url = `ws://localhost:${port}`;
+    crosis.connect();
+  },
+});
+
 // Create a .disconnect command
 r.defineCommand("disconnect", {
   help: 'Disconnects the Crosis client from the Replit adapter. Usage: ".disconnect"',
