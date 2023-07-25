@@ -68,6 +68,9 @@ r.defineCommand("disconnect", {
   },
 });
 
+// REPL history
+r.setupHistory(".replhist.txt", () => {});
+
 // When REPL is closed, disconnect Crosis
 r.on("exit", async () => {
   console.log("REPL closed, disconnecting Crosis...");
