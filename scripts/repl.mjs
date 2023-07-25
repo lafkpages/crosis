@@ -19,6 +19,12 @@ const crosis = new Crosis({
   debug: true,
 });
 
+crosis.on("message", () => {
+  if (crosis.debug) {
+    r.displayPrompt();
+  }
+});
+
 // Start REPL
 const r = repl.start({
   ignoreUndefined: true,
@@ -34,6 +40,8 @@ r.defineCommand("connect", {
   help: 'Connects the Crosis client to the Replit adapter. Usage: ".connect"',
   action: async () => {
     await crosis.connect();
+
+    r.displayPrompt();
   },
 });
 
@@ -47,6 +55,8 @@ r.defineCommand("connect-local", {
     crosis.url = `ws://localhost:${port}`;
 
     await crosis.connect();
+
+    r.displayPrompt();
   },
 });
 
