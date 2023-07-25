@@ -356,6 +356,21 @@ class Crosis extends EventEmitter {
   }
 
   /**
+   * Stat a file using GCSFiles.
+   */
+  async statFile(path: string) {
+    const chan = await this.startUtil("gcsfiles");
+
+    const resp = await chan.send({
+      stat: {
+        path,
+      },
+    });
+
+    return resp.statRes;
+  }
+
+  /**
    * Lists files in a directory using GCSFiles.
    */
   async readDir(path: string) {
