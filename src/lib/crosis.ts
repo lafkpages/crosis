@@ -78,7 +78,7 @@ class Crosis extends EventEmitter {
    * when instantiating Crosis, but you can also
    * set it later on.
    */
-  setAdapter(adapter: Adapter) {
+  setAdapter(adapter: Adapter | null) {
     // Don't allow changing adapter while connected
     if (this.wsReadyState != WebSocket.CLOSED) {
       throw new Error("Cannot change adapter while connected");
