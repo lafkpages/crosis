@@ -66,8 +66,9 @@ web_modules/
 # Optional REPL history
 .node_repl_history
 
-# Crosis REPLrc
+# Crosis REPL
 .replrc.js
+.replhist*
 
 # Output of 'npm pack'
 *.tgz
