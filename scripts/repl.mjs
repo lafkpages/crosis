@@ -32,20 +32,21 @@ r.context.Crosis = Crosis;
 // Create a .connect command
 r.defineCommand("connect", {
   help: 'Connects the Crosis client to the Replit adapter. Usage: ".connect"',
-  action: () => {
-    crosis.connect();
+  action: async () => {
+    await crosis.connect();
   },
 });
 
 // Create a .connect-local command
 r.defineCommand("connect-local", {
   help: 'Connects the Crosis client to a local server. Usage: ".connect-local [port=4096]"',
-  action: (port) => {
+  action: async (port) => {
     port = parseInt(port) || 4096;
 
     crosis.setAdapter(null);
     crosis.url = `ws://localhost:${port}`;
-    crosis.connect();
+
+    await crosis.connect();
   },
 });
 
