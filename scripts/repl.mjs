@@ -51,7 +51,7 @@ r.defineCommand("connect-local", {
 
 // Create a .disconnect command
 r.defineCommand("disconnect", {
-  help: 'Disconnects the Crosis client from the Replit adapter. Usage: ".disconnect"',
+  help: 'Disconnects the Crosis client. Usage: ".disconnect"',
   action: () => {
     crosis.disconnect();
   },
