@@ -32,8 +32,12 @@ const r = repl.start({
 });
 
 // Expose Crosis client to REPL
-r.context.crosis = crosis;
-r.context.Crosis = Crosis;
+function setContext() {
+  r.context.crosis = crosis;
+  r.context.Crosis = Crosis;
+}
+setContext();
+r.on("reset", setContext);
 
 // Create a .connect command
 r.defineCommand("connect", {
