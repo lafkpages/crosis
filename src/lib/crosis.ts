@@ -88,6 +88,20 @@ class Crosis extends EventEmitter {
   }
 
   /**
+   * Sets the Goval URL to use when connecting.
+   * Note that this will be overridden if an
+   * adapter is specified.
+   */
+  setUrl(url: string | null) {
+    // Don't allow changing URL while connected
+    if (this.wsReadyState != WebSocket.CLOSED) {
+      throw new Error("Cannot change URL while connected");
+    }
+
+    this.url = url;
+  }
+
+  /**
    * Returns the WebSocket ready state.
    */
   get wsReadyState() {
