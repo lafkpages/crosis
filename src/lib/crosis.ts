@@ -19,6 +19,7 @@ declare interface Crosis {
     event: "closeChannel",
     listener: (closeChanRes: protocol.CloseChannelRes) => void
   ): this;
+  on(event: "toast", listener: (message: string) => void): this;
   on(event: string, listener: Function): this;
 }
 
@@ -186,6 +187,10 @@ class Crosis extends EventEmitter {
 
       // Emit events
       this.emit("message", message);
+
+      if (message.toast) {
+        this.emit("toast", message.toast.text);
+      }
     };
 
     // Emit events
