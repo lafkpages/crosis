@@ -1,15 +1,12 @@
 import { build } from "esbuild";
 import { transformExtPlugin } from "@gjsify/esbuild-plugin-transform-ext";
+import glob from "fast-glob";
+
+const entryPoints = await glob(["./src/**/*.ts", "!./src/lib/types"]);
 
 const sharedConfig = {
   bundle: false,
-  entryPoints: [
-    "./src/index.ts",
-    "./src/lib/crosis.ts",
-    "./src/lib/channel.ts",
-    "./src/lib/adapters/index.ts",
-    "./src/lib/adapters/replit.ts",
-  ], // TODO: use glob
+  entryPoints,
   logLevel: "info",
   minify: true,
   sourcemap: true,
