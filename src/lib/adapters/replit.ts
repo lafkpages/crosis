@@ -1,6 +1,6 @@
 import fetch from "node-fetch";
 
-import { userAgent } from "../utils";
+import { userAgent } from "../utils/index.js";
 
 import type { Adapter } from "../types";
 
