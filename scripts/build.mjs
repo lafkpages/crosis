@@ -2,6 +2,7 @@ import { build } from "esbuild";
 import { transformExtPlugin } from "@gjsify/esbuild-plugin-transform-ext";
 import glob from "fast-glob";
 import { rm } from "fs/promises";
+import { exec } from "child_process";
 
 // Remove old build
 await rm("dist", { recursive: true, force: true });
@@ -33,3 +34,6 @@ await build({
     }),
   ],
 });
+
+// Run other build scripts
+exec("pnpm build:types");

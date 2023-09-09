@@ -20,10 +20,9 @@
     "test": "node test",
     "format": "prettier --write .",
     "build": "node ./scripts/build.mjs",
-    "postbuild": "tsc",
-    "prepare": "pnpm build",
-    "version": "pnpm format",
-    "docs": "typedoc src/index.ts",
+    "build:types": "tsc",
+    "build:docs": "typedoc src/index.ts",
+    "prepublishOnly": "pnpm build",
     "repl": "node ./scripts/repl.mjs"
   },
   "keywords": [
