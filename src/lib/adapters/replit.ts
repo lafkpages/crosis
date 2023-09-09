@@ -45,7 +45,7 @@ async function replitAdapter() {
         headers: {
           origin: "https://replit.com",
           "content-type": "application/json",
-          "x-requested-with": "Waltuh Whit",
+          "x-requested-with": "XmlHttpRequest",
           "user-agent": userAgent,
           cookie: `connect.sid=${encodeURIComponent(options.sid)}`,
         },
