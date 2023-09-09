@@ -1,6 +1,10 @@
 import { build } from "esbuild";
 import { transformExtPlugin } from "@gjsify/esbuild-plugin-transform-ext";
 import glob from "fast-glob";
+import { rm } from "fs/promises";
+
+// Remove old build
+await rm("dist", { recursive: true, force: true });
 
 const entryPoints = await glob(["./src/**/*.ts", "!./src/lib/types"]);
 
