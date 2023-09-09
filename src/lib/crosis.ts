@@ -14,6 +14,7 @@ declare interface Crosis {
   on(event: "connect", listener: () => void): this;
   on(event: "disconnect", listener: () => void): this;
   on(event: "message", listener: (message: protocol.Command) => void): this;
+  on(event: "messageSent", listener: (message: protocol.Command) => void): this;
   on(event: "openChannel", listener: (channel: Channel) => void): this;
   on(
     event: "closeChannel",
@@ -227,6 +228,9 @@ class Crosis extends EventEmitter {
     this.ws.send(
       protocol.Command.encode(protocol.Command.create(message)).finish()
     );
+
+    // Emit events
+    this.emit("messageSent", message);
 
     return new Promise((resolve, reject) => {
       this.refHandlers[message.ref] = (message) => {
