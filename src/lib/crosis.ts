@@ -485,6 +485,13 @@ class Crosis extends EventEmitter {
     return promises[0];
   }
 
+  /**
+   * Gets the edit history of a file.
+   * @param path The path of the file
+   * @param from From which version to start
+   * @param to Until which version to get
+   * @returns An array of OT packets
+   */
   async getFileHistory(path: string, from = 1, to = 1) {
     path = normalizePath(path);
 
