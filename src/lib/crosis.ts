@@ -492,8 +492,12 @@ class Crosis extends EventEmitter {
    * @param to Until which version to get
    * @returns An array of OT packets
    */
-  async getFileHistory(path: string, from = 1, to = 1) {
+  async getFileHistory(path: string, from = 1, to?: number) {
     path = normalizePath(path);
+
+    // If no to version is specified, get until
+    // the latest version that we know about
+    to = to ?? this.getLatestFileVersion(path);
 
     const chan = await this.startUtil("ot", `ot:${path}`);
 
