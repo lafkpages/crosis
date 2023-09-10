@@ -8,6 +8,8 @@ import { Channel } from "./channel.js";
 
 import { EventEmitter } from "events";
 
+import { normalize as normalizePath } from "path";
+
 const defaultOptions: CrosisOptions = {};
 
 declare interface Crosis {
@@ -470,6 +472,21 @@ class Crosis extends EventEmitter {
     ]);
 
     return promises[0];
+  }
+
+  async getFileHistory(path: string, from = 1, to = 1) {
+    path = normalizePath(path);
+
+    const chan = await this.startUtil("ot", `ot:${path}`);
+
+    const resp = await chan.send({
+      otFetchRequest: {
+        versionFrom: from,
+        versionTo: to,
+      },
+    });
+
+    return resp.otFetchResponse?.packets;
   }
 }
 
