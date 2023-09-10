@@ -308,8 +308,15 @@ class Crosis extends EventEmitter {
   /**
    * Disconnects the WebSocket, and closes all
    * previously opened channels.
+   *
+   * @returns Whether the WebSocket was disconnected
    */
   async disconnect(autoClose = true) {
+    // If already disconnected, do nothing
+    if (this.wsReadyState == WebSocket.CLOSED) {
+      return false;
+    }
+
     // Close all channels
     if (autoClose) {
       for (const channel of Object.values(this.channels)) {
@@ -327,6 +334,8 @@ class Crosis extends EventEmitter {
 
     // Emit events
     this.emit("disconnect");
+
+    return true;
   }
 
   /**
