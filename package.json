@@ -1,6 +1,6 @@
 {
   "name": "crosis",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "description": "Crosis done just right",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
