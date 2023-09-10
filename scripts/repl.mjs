@@ -78,6 +78,11 @@ r.setupHistory(".replhist.txt", () => {});
 // When REPL is closed, disconnect Crosis
 r.on("exit", async () => {
   console.log("REPL closed, disconnecting Crosis...");
-  await crosis.disconnect();
-  console.log("Crosis disconnected.");
+  const disconnected = await crosis.disconnect();
+
+  if (disconnected) {
+    console.log("Crosis disconnected.");
+  } else {
+    console.log("Crosis was already disconnected.");
+  }
 });
