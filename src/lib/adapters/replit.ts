@@ -14,9 +14,15 @@ export interface ReplitAdapterOptionsByToken {
   cluster: string;
 }
 
-export type ReplitAdapterOptions =
+export type ReplitAdapterOptions = (
   | ReplitAdapterOptionsBySid
-  | ReplitAdapterOptionsByToken;
+  | ReplitAdapterOptionsByToken
+) & {
+  /**
+   * Wether to use Firewalled Replit or normal Replit.
+   */
+  firewalled?: boolean;
+};
 
 export interface ReplitMetadata {
   token?: string;
@@ -25,13 +31,17 @@ export interface ReplitMetadata {
   error?: any;
 }
 
+const replitDomain = "replit.com";
+const firewalledReplitDomain = "firewalledreplit.com";
+
 async function replitAdapter() {
   const options = this as ReplitAdapterOptions;
+  const domain = options.firewalled ? firewalledReplitDomain : replitDomain;
 
   let metadata: ReplitMetadata;
 
   if ("token" in options) {
-    const host = `eval.${options.cluster}.replit.com`;
+    const host = `eval.${options.cluster}.${domain}`;
     metadata = {
       token: options.token,
       gurl: `wss://${host}`,
@@ -39,11 +49,11 @@ async function replitAdapter() {
     };
   } else {
     const metadataReq = await fetch(
-      `https://replit.com/data/repls/${options.replId}/get_connection_metadata`,
+      `https://${domain}/data/repls/${options.replId}/get_connection_metadata`,
       {
         method: "POST",
         headers: {
-          origin: "https://replit.com",
+          origin: `https://${domain}`,
           "content-type": "application/json",
           "x-requested-with": "XmlHttpRequest",
           "user-agent": userAgent,
