@@ -352,11 +352,13 @@ class Crosis extends EventEmitter {
     return this.channelsByName[name];
   }
 
-  private async startUtil(service: string) {
+  private async startUtil(...args: Parameters<Crosis["openChannel"]>) {
+    const service = args[0];
+
     if (service in this.utilFuncsChannels) {
       return this.channels[this.utilFuncsChannels[service]];
     } else {
-      const channel = await this.openChannel(service);
+      const channel = await this.openChannel(...args);
       this.utilFuncsChannels[service] = channel.id;
       return channel;
     }
