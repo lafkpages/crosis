@@ -36,4 +36,6 @@ await build({
 });
 
 // Run other build scripts
-exec("pnpm build:types");
+if (!process.argv.includes("--no-types")) {
+  exec("pnpm build:types");
+}
