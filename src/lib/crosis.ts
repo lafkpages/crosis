@@ -186,7 +186,7 @@ class Crosis extends EventEmitter {
       }
 
       // OT utils
-      if (channel.service == "ot") {
+      if (channel?.service == "ot") {
         if (message.otstatus) {
           this.otStatuses[message.otstatus.linkedFile.path] = message.otstatus;
         }
