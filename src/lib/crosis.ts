@@ -35,6 +35,7 @@ class Crosis extends EventEmitter {
   private channels: Record<number, Channel>;
   private channelsByName: Record<string, number>;
   private utilFuncsChannels: Record<string, number>;
+  private otStatuses: Record<string, protocol.OTStatus>;
   private execUtilResolve: ((output: string) => void) | null;
   private execUtilReject: ((error: string | Error) => void) | null;
   private execUtilOutput: string | null;
@@ -66,6 +67,8 @@ class Crosis extends EventEmitter {
     this.channelsByName = {};
 
     this.utilFuncsChannels = {};
+
+    this.otStatuses = {};
 
     this.bootStatus = null;
     this.containerState = null;
@@ -154,6 +157,7 @@ class Crosis extends EventEmitter {
       }
 
       const message = protocol.Command.decode(data);
+      const channel = this.channels[message.channel];
 
       if (this.debug) {
         console.log(message);
@@ -178,6 +182,13 @@ class Crosis extends EventEmitter {
           this.execUtilResolve = null;
           this.execUtilReject = null;
           this.execUtilOutput = null;
+        }
+      }
+
+      // OT utils
+      if (channel.service == "ot") {
+        if (message.otstatus) {
+          this.otStatuses[message.otstatus.linkedFile.path] = message.otstatus;
         }
       }
 
