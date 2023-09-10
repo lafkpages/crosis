@@ -506,6 +506,23 @@ class Crosis extends EventEmitter {
 
     return resp.otFetchResponse?.packets;
   }
+
+  /**
+   * Gets the latest version of a file
+   * that this client knows about. Meaning
+   * that if the file was edited by another
+   * client, this will not return the latest
+   * version until we've received the OT
+   * packets from the other client.
+   *
+   * Will return null if the client hasn't
+   * received any OT packets for the file.
+   */
+  getLatestFileVersion(path: string): number | null {
+    path = normalizePath(path);
+
+    return this.otStatuses[path]?.version ?? null;
+  }
 }
 
 export { Crosis };
