@@ -352,6 +352,11 @@ class Crosis extends EventEmitter {
     return this.channelsByName[name];
   }
 
+  /**
+   * Requests opening a channel for util functions to use.
+   * If a channel for the specified service already exists,
+   * it will be returned instead.
+   */
   private async startUtil(...args: Parameters<Crosis["openChannel"]>) {
     const service = args[0];
 
