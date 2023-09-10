@@ -107,9 +107,7 @@ class Crosis extends EventEmitter {
    * Returns the WebSocket ready state.
    */
   get wsReadyState() {
-    // TODO: if it's 0, the or will trigger
-
-    return this.ws?.readyState || WebSocket.CLOSED;
+    return this.ws?.readyState ?? WebSocket.CLOSED;
   }
 
   /**
