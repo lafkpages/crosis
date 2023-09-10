@@ -6,13 +6,20 @@ import { Crosis } from "./crosis.js";
 export class Channel {
   private crosis: Crosis;
   private openChanRes: protocol.OpenChannelRes;
+  service: string;
+  name: string;
 
   constructor(
     crosis: Crosis,
-    openChanRes: protocol.OpenChannelRes
+    openChanRes: protocol.OpenChannelRes,
+    service: string,
+    name: string
   ) {
     this.crosis = crosis;
     this.openChanRes = openChanRes;
+
+    this.service = service;
+    this.name = name;
   }
 
   /**
@@ -34,7 +41,7 @@ export class Channel {
 
   /**
    * Closes this channel.
-   * 
+   *
    * Equivalent to `crosis.closeChannel(channel.id)`,
    * but this already sets the channel ID for you.
    */

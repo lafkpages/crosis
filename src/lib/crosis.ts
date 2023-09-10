@@ -265,7 +265,7 @@ class Crosis extends EventEmitter {
       },
     });
 
-    const channel = new Channel(this, openChanRes.openChanRes);
+    const channel = new Channel(this, openChanRes.openChanRes, service, name);
 
     this.channels[openChanRes.openChanRes.id] = channel;
 
