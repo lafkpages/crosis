@@ -309,6 +309,9 @@ class Crosis extends EventEmitter {
    * Disconnects the WebSocket, and closes all
    * previously opened channels.
    *
+   * @param autoClose Whether to automatically close
+   * all the channels that were opened
+   *
    * @returns Whether the WebSocket was disconnected
    */
   async disconnect(autoClose = true) {
